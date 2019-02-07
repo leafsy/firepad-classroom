@@ -15,11 +15,9 @@ export interface Mode {
 })
 export class EditorComponent implements OnInit {
 
-  @ViewChild('AceEditor') aceEditor: AceEditorComponent;
+  @ViewChild('AceEditor') aceEditor : AceEditorComponent;
 
-  options:any = {maxLines: 1000, printMargin: false};
-
-  modes:Mode[] = [
+  modes : Mode[] = [
     { name: 'C/C++', value: 'c_cpp' },
     { name: 'C#', value: 'csp' },
     { name: 'HTML', value: 'html' },
@@ -36,17 +34,35 @@ export class EditorComponent implements OnInit {
     { name: 'R', value: 'r' },
   ];
 
-  themes:any = {
+  themes : any = {
     light: ['chrome', 'eclipse', 'xcode'],
     dark: ['cobalt', 'monokai', 'terminal'],
   };
 
-  selectedMode = 'python';
-  selectedTheme = 'chrome';
+  selectedMode : string = 'python';
+  selectedTheme : string = 'chrome';
+
+  options : any = {
+    fontSize: 15,
+    printMargin: false,
+    scrollPastEnd: 0.5,
+  };
 
   constructor() { }
 
   ngOnInit() { }
+
+  selectedModeChange(mode) {
+    this.selectedMode = mode;
+  }
+
+  selectedThemeChange(theme) {
+    this.selectedTheme = theme;
+  }
+
+  fontSizeChange(size) {
+    this.options = { ...this.options, fontSize: size };
+  }
 
   ngAfterViewInit() {
 

@@ -1,21 +1,3 @@
-<mat-form-field>
-	<mat-select [(value)]="selectedMode" placeholder="Language">
-		<mat-option *ngFor="let mode of modes" [value]="mode.value">
-			{{mode.name}}
-		</mat-option>
-	</mat-select>
-	<mat-select [(value)]="selectedTheme" placeholder="Theme">
-		<mat-optgroup
-			*ngFor="let item of themes | keyvalue"
-			[label]="item.key"
-		>
-			<mat-option *ngFor="let theme of item.value" [value]="theme">
-				{{theme | titlecase}}
-			</mat-option>
-		</mat-optgroup>
-	</mat-select>
-</mat-form-field>
-
 <ace-editor
 	#AceEditor
 	[mode]="selectedMode"
@@ -24,5 +6,15 @@
 	[readOnly]="false"
 	[autoUpdateContent]="true"
 	class="ace-editor"
-	style="height:150px;"
 ></ace-editor>
+
+<app-editor-pref
+	[modes]="modes"
+	[selectedMode]="selectedMode"
+	(selectedModeChange)="selectedModeChange($event)"
+	[themes]="themes"
+	[selectedTheme]="selectedTheme"
+	(selectedThemeChange)="selectedThemeChange($event)"
+	[fontSize]="options.fontSize"
+	(fontSizeChange)="fontSizeChange($event)"
+></app-editor-pref>

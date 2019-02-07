@@ -1,0 +1,33 @@
+<mat-form-field>
+	<mat-select
+		placeholder="Language"
+		[(value)]="selectedMode"
+		(selectionChange)="modeChange($event)">
+		<mat-option *ngFor="let mode of modes" [value]="mode.value">
+			{{mode.name}}
+		</mat-option>
+	</mat-select>
+</mat-form-field>
+
+<mat-form-field>
+	<mat-select
+		placeholder="Theme"
+		[(value)]="selectedTheme"
+		(selectionChange)="themeChange($event)">
+		<mat-optgroup *ngFor="let item of themes | keyvalue" [label]="item.key">
+			<mat-option *ngFor="let theme of item.value" [value]="theme">
+				{{theme | titlecase}}
+			</mat-option>
+		</mat-optgroup>
+	</mat-select>
+</mat-form-field>
+
+<mat-form-field>
+	<input matInput
+		type="number"
+		placeholder="Font Size (px)"
+		[value]="fontSize"
+		[min]="minFontSize"
+		[max]="maxFontSize"
+		(change)="sizeChange($event)">
+</mat-form-field>
