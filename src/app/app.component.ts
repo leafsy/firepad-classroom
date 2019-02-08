@@ -1,12 +1,9 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AceEditorComponent } from 'ng2-ace-editor';
+import { UserPanelComponent } from './user-panel/user-panel.component';
+import { Mode } from './models';
 import * as firebase from 'firebase';
 import * as Firepad from 'firepad';
-
-export interface Mode {
-  name: string;
-  value: string;
-}
 
 @Component({
   selector: 'app-root',
@@ -88,9 +85,12 @@ export class AppComponent {
       window.location.href = window.location.href + '#' + ref.key;
     }
 
+	// Create a random ID to use as our user ID.
+    const userId = Math.floor(Math.random() * 9999999999).toString();
     // Create Firepad.
     const editor = this.aceEditor.getEditor();
     const firepad = Firepad.fromACE(ref, editor, {
+      userId: userId,
       defaultText: 'function go() {\n  var message = "Hello, world.";\n}'
     });
 

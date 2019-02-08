@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Mode } from '../app.component';
+import { Mode } from '../models';
 
 @Component({
   selector: 'app-editor-pref',
