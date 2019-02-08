@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { AceEditorComponent } from 'ng2-ace-editor';
 import * as firebase from 'firebase';
 import * as Firepad from 'firepad';
@@ -11,7 +11,8 @@ export interface Mode {
 @Component({
   selector: 'app-editor',
   templateUrl: './editor.component.html',
-  styleUrls: ['./editor.component.less']
+  styleUrls: ['./editor.component.less'],
+  encapsulation: ViewEncapsulation.None
 })
 export class EditorComponent implements OnInit {
 
@@ -24,14 +25,14 @@ export class EditorComponent implements OnInit {
     { name: 'Java', value: 'java' },
     { name: 'JavaScript', value: 'javascript' },
     { name: 'LaTeX', value: 'latex' },
-    { name: 'Markdown', value: 'markdown' },
     { name: 'MATLAB', value: 'matlab' },
     { name: 'OCaml', value: 'ocaml' },
     { name: 'PHP', value: 'php' },
     { name: 'Python', value: 'python' },
+    { name: 'R', value: 'r' },
     { name: 'SQL', value: 'sql' },
     { name: 'Swift', value: 'swift' },
-    { name: 'R', value: 'r' },
+    { name: 'Text', value: 'text' },
   ];
 
   themes : any = {
