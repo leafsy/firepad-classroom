@@ -10,14 +10,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AceEditorModule } from 'ng2-ace-editor';
 
 import { AppComponent } from './app.component';
-import { EditorComponent } from './editor/editor.component';
 import { EditorPrefComponent } from './editor-pref/editor-pref.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EditorComponent,
     EditorPrefComponent,
     UserPanelComponent
   ],

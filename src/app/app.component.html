@@ -1,8 +1,30 @@
 <router-outlet></router-outlet>
 
 <mat-drawer-container>
+  
   <mat-drawer #drawer opened mode="side">
     <app-user-panel></app-user-panel>
   </mat-drawer>
-  <app-editor></app-editor>
+  
+  <ace-editor
+    #AceEditor
+    [mode]="selectedMode"
+    [theme]="selectedTheme"
+    [options]="options"
+    [readOnly]="false"
+    [autoUpdateContent]="true"
+    class="ace-editor"
+  ></ace-editor>
+
+  <app-editor-pref
+    [modes]="modes"
+    [selectedMode]="selectedMode"
+    (selectedModeChange)="selectedModeChange($event)"
+    [themes]="themes"
+    [selectedTheme]="selectedTheme"
+    (selectedThemeChange)="selectedThemeChange($event)"
+    [fontSize]="options.fontSize"
+    (fontSizeChange)="fontSizeChange($event)"
+  ></app-editor-pref>
+
 </mat-drawer-container>
