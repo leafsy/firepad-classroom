@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   MatSelectModule, MatInputModule, MatExpansionModule, MatSidenavModule,
-  MatListModule, MatButtonModule
+  MatListModule, MatButtonModule, MatIconModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AceEditorModule } from 'ng2-ace-editor';
@@ -28,6 +28,7 @@ import { UserPanelComponent } from './user-panel/user-panel.component';
     MatSelectModule,
     MatInputModule,
     MatListModule,
+    MatIconModule,
     MatButtonModule,
     MatExpansionModule,
     BrowserAnimationsModule,

@@ -15,6 +15,7 @@ export class UserPanelComponent implements OnInit {
   users : User[];
 
   userName : string = uniqueNamesGenerator(' ', true);
+  queryStr : string = '';
 
   constructor() { }
 
@@ -37,6 +38,11 @@ export class UserPanelComponent implements OnInit {
     const nameRef = this.ref.child(this.userId).child('name');
     nameRef.onDisconnect().remove();
     nameRef.set(this.userName);
+  }
+
+  isMatch(name : string) {
+    const matchStr = name.substring(0, this.queryStr.length);
+    return this.queryStr.toLowerCase() === matchStr.toLowerCase();
   }
 
 }
