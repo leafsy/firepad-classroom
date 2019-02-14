@@ -3,7 +3,10 @@
 <mat-drawer-container>
 
   <mat-drawer #drawer opened mode="side">
-    <app-user-panel #UserPanel></app-user-panel>
+    <app-user-panel #UserPanel
+      [ref]="ref.child('users')"
+      [userId]="userId"
+    ></app-user-panel>
   </mat-drawer>
   
   <ace-editor

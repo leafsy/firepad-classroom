@@ -46,24 +46,12 @@ export class AppComponent {
     scrollPastEnd: 0.5,
   };
 
+  ref : firebase.database.Reference;
+  userId : number = Math.floor(Math.random() * 9999999999);
+
   constructor() { }
 
-  ngOnInit() { }
-
-  selectedModeChange(mode) {
-    this.selectedMode = mode;
-  }
-
-  selectedThemeChange(theme) {
-    this.selectedTheme = theme;
-  }
-
-  fontSizeChange(size) {
-    this.options = { ...this.options, fontSize: size };
-  }
-
-  ngAfterViewInit() {
-
+  ngOnInit() {
     const config = {
       apiKey: "AIzaSyATUWj7WlsBhBIvr829TNawyCE0WOMHMEE",
       authDomain: "firepad-classroom.firebaseapp.com",
@@ -79,21 +67,31 @@ export class AppComponent {
     let ref = firebase.database().ref();
     let hash = window.location.hash.replace(/#/g, '');
     if (hash) {
-      ref = ref.child(hash);
+      this.ref = ref.child(hash);
+      console.log(ref);
     } else {
-      ref = ref.push();
+      this.ref = ref.push();
       window.location.href = window.location.href + '#' + ref.key;
     }
+  }
 
-	// Create a random ID to use as our user ID.
-    const userId = Math.floor(Math.random() * 9999999999).toString();
-    // Create Firepad.
-    const editor = this.aceEditor.getEditor();
-    const firepad = Firepad.fromACE(ref, editor, {
-      userId: userId,
+  selectedModeChange(mode) {
+    this.selectedMode = mode;
+  }
+
+  selectedThemeChange(theme) {
+    this.selectedTheme = theme;
+  }
+
+  fontSizeChange(size) {
+    this.options = { ...this.options, fontSize: size };
+  }
+
+  ngAfterViewInit() {
+    Firepad.fromACE(this.ref, this.aceEditor.getEditor(), {
+      userId: this.userId,
       defaultText: 'function go() {\n  var message = "Hello, world.";\n}'
     });
-
   }
 
 }

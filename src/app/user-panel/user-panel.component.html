@@ -1,3 +1,21 @@
-<p>
-  user-panel works!
-</p>
+<mat-form-field class="mat-form-field-username">
+    <input matInput required
+        type="text"
+        maxLength="25"
+        placeholder="Enter Display Name"
+        [(ngModel)]="userName"
+        (change)="nameChange($event)">
+</mat-form-field>
+
+<mat-list>
+    <h3 mat-subheader>Instructor</h3>
+    <mat-divider></mat-divider>
+    <h3 mat-subheader>Students</h3>
+    <mat-list-item *ngFor="let user of users">
+        <button mat-button class="mat-button-user">
+            <span class="dot-user-color"
+                [ngStyle]="{'background-color':user.color}"></span>
+            {{user.name}}
+        </button>
+    </mat-list-item>
+</mat-list>
