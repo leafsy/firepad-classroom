@@ -10,7 +10,7 @@
 		<mat-select
 			placeholder="Language"
 			[(value)]="selectedMode"
-			(selectionChange)="modeChange($event)">
+			(selectionChange)="modeChange()">
 			<mat-option *ngFor="let mode of modes" [value]="mode.value">
 				{{mode.name}}
 			</mat-option>
@@ -21,7 +21,7 @@
 		<mat-select
 			placeholder="Theme"
 			[(value)]="selectedTheme"
-			(selectionChange)="themeChange($event)">
+			(selectionChange)="themeChange()">
 			<mat-optgroup *ngFor="let item of themes | keyvalue" [label]="item.key">
 				<mat-option *ngFor="let theme of item.value" [value]="theme">
 					{{theme | titlecase}}

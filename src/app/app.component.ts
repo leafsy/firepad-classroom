@@ -47,7 +47,9 @@ export class AppComponent {
   };
 
   ref : firebase.database.Reference;
-  userId : number = Math.floor(Math.random() * 9999999999);
+  userId : string = Math.floor(Math.random() * 9999999999).toString();
+  ownerId : string = '';
+  activeUser : string = '';
 
   constructor() { }
 
@@ -63,27 +65,36 @@ export class AppComponent {
 
     firebase.initializeApp(config);
 
-    //// Get Firebase Database reference.
-    let ref = firebase.database().ref();
+    // Get Firebase Database reference.
+    this.ref = firebase.database().ref();
     let hash = window.location.hash.replace(/#/g, '');
     if (hash) {
-      this.ref = ref.child(hash);
-      console.log(ref);
+      this.ref = this.ref.child(hash);
+      this.ref.child('owner').once('value', snapshot => {
+        this.ownerId = snapshot.val();
+      });
     } else {
-      this.ref = ref.push();
-      window.location.href = window.location.href + '#' + ref.key;
+      this.ref = this.ref.push();
+      window.location.href = window.location.href + '#' + this.ref.key;
+      this.ownerId = this.userId;
+      this.ref. onDisconnect().remove();
+      this.ref.child('owner').set(this.userId);
     }
+
+    this.ref.child('activeUser').on('value', snapshot => {
+      this.activeUser = snapshot.val();
+    });
   }
 
-  selectedModeChange(mode) {
+  setSelectedMode(mode) {
     this.selectedMode = mode;
   }
 
-  selectedThemeChange(theme) {
+  setSelectedTheme(theme : string) {
     this.selectedTheme = theme;
   }
 
-  fontSizeChange(size) {
+  setFontSize(size : number) {
     this.options = { ...this.options, fontSize: size };
   }
 
@@ -92,6 +103,12 @@ export class AppComponent {
       userId: this.userId,
       defaultText: 'function go() {\n  var message = "Hello, world.";\n}'
     });
+  }
+
+  setActiveUser(id : string) {
+    if (this.ownerId === this.userId) {
+      this.ref.child('activeUser').set(id === this.activeUser? '' : id);
+    }
   }
 
 }

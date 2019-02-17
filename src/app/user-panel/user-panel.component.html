@@ -9,6 +9,13 @@
 
 <mat-list dense>
     <h3 mat-subheader>Instructor</h3>
+    <mat-list-item *ngIf="owner">
+        <button mat-flat-button disableRipple class="mat-button-user">
+            <span class="dot-user-color"
+                [ngStyle]="{'background-color':owner.color}"></span>
+            {{owner.name}}
+        </button>
+    </mat-list-item>
     <mat-divider></mat-divider>
     <h3 mat-subheader>Students</h3>
     <mat-form-field appearance="fill" class="mat-form-field-search">
@@ -25,7 +32,10 @@
     </mat-form-field>
     <ng-container *ngFor="let user of users">
         <mat-list-item *ngIf="isMatch(user.name)">
-            <button mat-button class="mat-button-user">
+            <button mat-flat-button class="mat-button-user"
+                [color]="user.id===activeUser? 'primary':null"
+                [disableRipple]="ownerId!==userId"
+                (click)="userChange(user)">
                 <span class="dot-user-color"
                     [ngStyle]="{'background-color':user.color}"></span>
                 {{user.name}}

@@ -6,6 +6,9 @@
     <app-user-panel #UserPanel
       [ref]="ref.child('users')"
       [userId]="userId"
+      [ownerId]="ownerId"
+      [activeUser]="activeUser"
+      (activeUserChange)="setActiveUser($event)"
     ></app-user-panel>
   </mat-drawer>
   
@@ -14,7 +17,7 @@
     [mode]="selectedMode"
     [theme]="selectedTheme"
     [options]="options"
-    [readOnly]="false"
+    [readOnly]="!(ownerId===userId || activeUser===userId)"
     [autoUpdateContent]="true"
     class="ace-editor"
   ></ace-editor>
@@ -22,12 +25,12 @@
   <app-editor-pref
     [modes]="modes"
     [selectedMode]="selectedMode"
-    (selectedModeChange)="selectedModeChange($event)"
+    (selectedModeChange)="setSelectedMode($event)"
     [themes]="themes"
     [selectedTheme]="selectedTheme"
-    (selectedThemeChange)="selectedThemeChange($event)"
+    (selectedThemeChange)="setSelectedTheme($event)"
     [fontSize]="options.fontSize"
-    (fontSizeChange)="fontSizeChange($event)"
+    (fontSizeChange)="setFontSize($event)"
   ></app-editor-pref>
 
 </mat-drawer-container>
