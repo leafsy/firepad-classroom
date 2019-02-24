@@ -1,3 +1,21 @@
-<p>
-  landing works!
-</p>
+<mat-tab-group>
+
+	<mat-tab label="Instructor">
+		Create a new workspace using the following language:
+		<a mat-raised-button
+			routerLink="/editor"
+			[queryParams]="{mode:mode}">
+			Create
+		</a>
+	</mat-tab>
+
+	<mat-tab label="Student">
+		Join an existing workspace by entering its key below:
+		<a mat-raised-button
+			routerLink="/editor"
+			[queryParams]="{key:key}">
+			Join
+		</a>
+	</mat-tab>
+
+</mat-tab-group>

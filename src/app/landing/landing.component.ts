@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingComponent implements OnInit {
 
+  mode : string = '';
+  key : string = '';
+
   constructor() { }
 
   ngOnInit() {

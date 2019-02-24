@@ -1,6 +1,7 @@
 export interface Mode {
   name: string;
   value: string;
+  template: string;
 }
 
 export interface User {
