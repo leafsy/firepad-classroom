@@ -13,12 +13,16 @@ import { AceEditorModule } from 'ng2-ace-editor';
 import { AppComponent } from './app.component';
 import { EditorPrefComponent } from './editor-pref/editor-pref.component';
 import { UserPanelComponent } from './user-panel/user-panel.component';
+import { MainComponent } from './main/main.component';
+import { LandingComponent } from './landing/landing.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EditorPrefComponent,
-    UserPanelComponent
+    UserPanelComponent,
+    MainComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,
