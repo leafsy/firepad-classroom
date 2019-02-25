@@ -29,6 +29,8 @@ export class MainComponent implements OnInit {
 
   options : any = {
     fontSize: 15,
+    tabSize: 2,
+    useSoftTabs: true,
     printMargin: false,
     scrollPastEnd: 0.5,
   };
@@ -44,7 +46,7 @@ export class MainComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    const presetMode = this.route.snapshot.paramMap.get('mode');
+    const presetMode = this.route.snapshot.queryParamMap.get('mode');
     if (presetMode) {
       this.selectedMode = presetMode;
     }
@@ -62,7 +64,7 @@ export class MainComponent implements OnInit {
 
     // Get Firebase Database reference.
     this.ref = firebase.database().ref();
-    let key = this.route.snapshot.paramMap.get('key');
+    let key = this.route.snapshot.queryParamMap.get('key');
     if (key) {
       this.ref = this.ref.child(key);
       this.ref.child('owner').once('value', snapshot => {

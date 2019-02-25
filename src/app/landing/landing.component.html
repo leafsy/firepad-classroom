@@ -2,6 +2,17 @@
 
 	<mat-tab label="Instructor">
 		Create a new workspace using the following language:
+		<mat-form-field class="mat-form-field-select">
+			<mat-select
+				placeholder="Language"
+				[(value)]="mode">
+				<mat-option
+					*ngFor="let mode of modes"
+					[value]="mode.value">
+					{{mode.name}}
+				</mat-option>
+			</mat-select>
+		</mat-form-field>
 		<a mat-raised-button
 			routerLink="/editor"
 			[queryParams]="{mode:mode}">
@@ -11,6 +22,13 @@
 
 	<mat-tab label="Student">
 		Join an existing workspace by entering its key below:
+		<mat-form-field class="mat-form-field-key">
+			<input matInput
+				type="text"
+				placeholder="Key (20 chars)"
+				maxlength="20"
+				[(ngModel)]="key">
+		</mat-form-field>
 		<a mat-raised-button
 			routerLink="/editor"
 			[queryParams]="{key:key}">

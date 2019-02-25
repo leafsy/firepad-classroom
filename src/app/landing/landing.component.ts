@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Mode } from '../models';
+import { allModes } from '../templates';
 
 @Component({
   selector: 'app-landing',
@@ -9,6 +11,8 @@ export class LandingComponent implements OnInit {
 
   mode : string = '';
   key : string = '';
+
+  modes : Mode[] = allModes;
 
   constructor() { }
 
