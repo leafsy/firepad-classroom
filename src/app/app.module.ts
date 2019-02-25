@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
   MatSelectModule, MatInputModule, MatExpansionModule, MatSidenavModule,
-  MatListModule, MatButtonModule, MatIconModule, MatTabsModule
+  MatListModule, MatButtonModule, MatIconModule, MatCardModule, MatButtonToggleModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AceEditorModule } from 'ng2-ace-editor';
@@ -33,9 +33,10 @@ import { LandingComponent } from './landing/landing.component';
     MatInputModule,
     MatListModule,
     MatIconModule,
-    MatTabsModule,
+    MatCardModule,
     MatButtonModule,
     MatExpansionModule,
+    MatButtonToggleModule,
     BrowserAnimationsModule,
     AceEditorModule,
     AppRoutingModule

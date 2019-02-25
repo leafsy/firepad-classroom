@@ -9,10 +9,9 @@ import { allModes } from '../templates';
 })
 export class LandingComponent implements OnInit {
 
+  modes : Mode[] = allModes;
   mode : string = '';
   key : string = '';
-
-  modes : Mode[] = allModes;
 
   constructor() { }
 

@@ -1,7 +1,24 @@
-<mat-tab-group>
+<div class="div-title-group">
+	<img src="../assets/logo.png">
+	<h2>Collaborative code editing with write-permission control</h2>
+	<p>- join as -</p>
+	<mat-button-toggle-group #group="matButtonToggleGroup">
+		<mat-button-toggle value="i" checked>
+			Instructor
+		</mat-button-toggle>
+		<mat-button-toggle value="s">
+			Student
+		</mat-button-toggle>
+	</mat-button-toggle-group>
+</div>
 
-	<mat-tab label="Instructor">
-		Create a new workspace using the following language:
+<mat-card *ngIf="group.value==='i'" class="mat-card-landing">
+	<mat-card-header>
+	<mat-card-title>
+		Create a new workspace using the following language
+	</mat-card-title>
+	</mat-card-header>
+	<mat-card-actions>
 		<mat-form-field class="mat-form-field-select">
 			<mat-select
 				placeholder="Language"
@@ -14,26 +31,33 @@
 			</mat-select>
 		</mat-form-field>
 		<a mat-raised-button
+			color="accent"
 			routerLink="/editor"
 			[queryParams]="{mode:mode}">
 			Create
 		</a>
-	</mat-tab>
+	</mat-card-actions>
+</mat-card>
 
-	<mat-tab label="Student">
-		Join an existing workspace by entering its key below:
+<mat-card *ngIf="group.value==='s'" class="mat-card-landing">
+	<mat-card-header>
+	<mat-card-title>
+		Join an existing workspace by entering its key below
+	</mat-card-title>
+	</mat-card-header>
+	<mat-card-actions>
 		<mat-form-field class="mat-form-field-key">
 			<input matInput
 				type="text"
-				placeholder="Key (20 chars)"
+				placeholder="Key"
 				maxlength="20"
 				[(ngModel)]="key">
 		</mat-form-field>
 		<a mat-raised-button
+			color="accent"
 			routerLink="/editor"
 			[queryParams]="{key:key}">
 			Join
 		</a>
-	</mat-tab>
-
-</mat-tab-group>
+	</mat-card-actions>
+</mat-card>
