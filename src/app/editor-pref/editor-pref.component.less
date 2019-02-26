@@ -1,11 +1,14 @@
 :host {
 	position: absolute;
 	z-index: 10;
-	bottom: -5px;
-	left: 50%;
-	transform: translateX(-50%);
+	bottom: 20px;
+	right: 20px;
+	width: 210px;
 }
 
 .mat-form-field { margin: 8px; }
 .mat-form-field-select { width: 150px; }
-.mat-form-field-number { width: 100px; }
+.mat-form-field-number { width: 150px; }
+::ng-deep .mat-expansion-indicator::after {
+	transform: rotate(225deg) !important;
+}
