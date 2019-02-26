@@ -10,7 +10,7 @@ import { allModes } from '../templates';
 export class LandingComponent implements OnInit {
 
   modes : Mode[] = allModes;
-  mode : string = '';
+  mode : string = 'python';
   key : string = '';
 
   constructor() { }
