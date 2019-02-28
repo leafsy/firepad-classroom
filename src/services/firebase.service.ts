@@ -55,4 +55,12 @@ export class FirebaseService {
     });
   }
 
+  removeOnDisconnect(path? : string) {
+    if (path) {
+      this.ref && this.ref.child(path).onDisconnect().remove();
+    } else {
+      this.ref && this.ref.onDisconnect().remove();
+    }
+  }
+
 }

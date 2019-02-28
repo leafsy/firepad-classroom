@@ -28,7 +28,7 @@ export class LandingComponent implements OnInit {
     this.service.setRef();
     this.service.setValue('owner', this.service.getUserId());
     this.service.setValue('mode', this.mode);
-    this.service.getRef().onDisconnect().remove();
+    this.service.removeOnDisconnect();
     this.router.navigate(['/editor']);
   }
 

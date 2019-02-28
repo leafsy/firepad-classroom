@@ -47,7 +47,6 @@ export class MainComponent implements OnInit {
     private dialog: MatDialog,
   ) {
     this.userId = this.service.getUserId();
-    this.openDialog();
   }
 
   ngOnInit() {
@@ -57,16 +56,20 @@ export class MainComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    const mode : Mode = this.modes.find(mode => {
-      return mode.value === this.selectedMode;
-    });
-    Firepad.fromACE(this.service.getRef(), this.aceEditor.getEditor(), {
-      userId: this.userId,
-      defaultText: mode? mode.template : '',
-    });
+    if (this.service.getRef()) {
+      const mode : Mode = this.modes.find(mode => {
+        return mode.value === this.selectedMode;
+      });
+      Firepad.fromACE(this.service.getRef(), this.aceEditor.getEditor(), {
+        userId: this.userId,
+        defaultText: mode? mode.template : '',
+      });
+    } else {
+
+    }
   }
 
-  openDialog() {
+  openKeyDialog() {
     this.dialog.open(KeyDialogComponent, {
       width: '500px',
       data: { key: this.service.getRef().key }

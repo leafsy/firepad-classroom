@@ -46,9 +46,8 @@ export class UserPanelComponent implements OnInit {
   }
 
   nameChange() {
-    const nameRef = this.service.getRef().child(`users/${this.userId}/name`);
-    nameRef.onDisconnect().remove();
-    nameRef.set(this.userName);
+    this.service.setValue(`users/${this.userId}/name`, this.userName);
+    this.service.removeOnDisconnect(`users/${this.userId}/name`);
   }
 
   isMatch(name : string) {
