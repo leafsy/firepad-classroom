@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Welcome to Firepad Classroom!</h1>
+<div mat-dialog-content>
+  <p>Invite other students to this workspace using the provided key:</p>
+  <mat-form-field appearance="outline" class="mat-form-field-key">
+  	<mat-label>class key</mat-label>
+    <input matInput disabled [value]="data.key" #keyTarget>
+    <button mat-button matSuffix mat-icon-button ngxClipboard
+      aria-label="Copy"
+      [cbContent]="data.key"
+      (click)="onCopy()">
+      <mat-icon>file_copy</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button cdkFocusInitial (click)="onDismiss()">Dismiss</button>
+</div>

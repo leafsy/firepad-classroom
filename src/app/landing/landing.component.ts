@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 import { FirebaseService } from '../../services/firebase.service';
 import { Mode } from '../models';
 import { allModes } from '../templates';
@@ -16,8 +17,9 @@ export class LandingComponent implements OnInit {
   key : string = '';
 
   constructor(
-  	private router: Router,
-  	private service: FirebaseService,
+    private router: Router,
+    private service: FirebaseService,
+    private snackBar: MatSnackBar,
   ) {}
 
   ngOnInit() {}
@@ -35,7 +37,7 @@ export class LandingComponent implements OnInit {
       this.service.setRef(this.key);
       this.router.navigate(['/editor']);
     }, () => {
-
+      this.snackBar.open('workspace not found', 'OK', { duration: 5000 });
     });
   }
 

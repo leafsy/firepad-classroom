@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialog } from '@angular/material';
 import { AceEditorComponent } from 'ng2-ace-editor';
-import { UserPanelComponent } from '../user-panel/user-panel.component';
+import { KeyDialogComponent } from '../key-dialog/key-dialog.component';
 import { FirebaseService } from '../../services/firebase.service';
 import { Mode } from '../models';
 import { allModes } from '../templates';
@@ -43,14 +44,33 @@ export class MainComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private service: FirebaseService,
+    private dialog: MatDialog,
   ) {
     this.userId = this.service.getUserId();
+    this.openDialog();
   }
 
   ngOnInit() {
     this.service.onceValue('owner', val => this.ownerId = val);
     this.service.onceValue('mode', val => this.selectedMode = val);
     this.service.onValue('activeUser', val => this.activeUser = val);
+  }
+
+  ngAfterViewInit() {
+    const mode : Mode = this.modes.find(mode => {
+      return mode.value === this.selectedMode;
+    });
+    Firepad.fromACE(this.service.getRef(), this.aceEditor.getEditor(), {
+      userId: this.userId,
+      defaultText: mode? mode.template : '',
+    });
+  }
+
+  openDialog() {
+    this.dialog.open(KeyDialogComponent, {
+      width: '500px',
+      data: { key: this.service.getRef().key }
+    });
   }
 
   setSelectedMode(mode) {
@@ -63,16 +83,6 @@ export class MainComponent implements OnInit {
 
   setFontSize(size : number) {
     this.options = { ...this.options, fontSize: size };
-  }
-
-  ngAfterViewInit() {
-    const mode : Mode = this.modes.find(mode => {
-      return mode.value === this.selectedMode;
-    });
-    Firepad.fromACE(this.service.getRef(), this.aceEditor.getEditor(), {
-      userId: this.userId,
-      defaultText: mode? mode.template : '',
-    });
   }
 
   setActiveUser(id : string) {
