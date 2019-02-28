@@ -13,6 +13,7 @@ import { UserPanelComponent } from './user-panel/user-panel.component';
 import { MainComponent } from './main/main.component';
 import { LandingComponent } from './landing/landing.component';
 import { KeyDialogComponent } from './key-dialog/key-dialog.component';
+import { ErrDialogComponent } from './err-dialog/err-dialog.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { KeyDialogComponent } from './key-dialog/key-dialog.component';
     UserPanelComponent,
     MainComponent,
     LandingComponent,
-    KeyDialogComponent
+    KeyDialogComponent,
+    ErrDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,10 @@ import { KeyDialogComponent } from './key-dialog/key-dialog.component';
     AppRoutingModule,
     MaterialModule
   ],
-  entryComponents: [KeyDialogComponent],
+  entryComponents: [
+    KeyDialogComponent,
+    ErrDialogComponent,
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

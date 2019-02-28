@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { AceEditorComponent } from 'ng2-ace-editor';
 import { KeyDialogComponent } from '../key-dialog/key-dialog.component';
+import { ErrDialogComponent } from '../err-dialog/err-dialog.component';
 import { FirebaseService } from '../../services/firebase.service';
 import { Mode } from '../models';
 import { allModes } from '../templates';
@@ -65,7 +66,7 @@ export class MainComponent implements OnInit {
         defaultText: mode? mode.template : '',
       });
     } else {
-
+      setTimeout(() => this.openErrDialog());
     }
   }
 
@@ -73,6 +74,13 @@ export class MainComponent implements OnInit {
     this.dialog.open(KeyDialogComponent, {
       width: '500px',
       data: { key: this.service.getRef().key }
+    });
+  }
+
+  openErrDialog() {
+    this.dialog.open(ErrDialogComponent, {
+      width: '500px',
+      disableClose: true,
     });
   }
 
