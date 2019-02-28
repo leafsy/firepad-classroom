@@ -2,8 +2,6 @@
 
   <mat-drawer #drawer opened mode="side">
     <app-user-panel #UserPanel
-      [ref]="ref.child('users')"
-      [userId]="userId"
       [ownerId]="ownerId"
       [activeUser]="activeUser"
       (activeUserChange)="setActiveUser($event)"

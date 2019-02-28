@@ -4,9 +4,9 @@ import { MainComponent } from './main/main.component';
 import { LandingComponent } from './landing/landing.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: LandingComponent },
-  { path: 'editor', component: MainComponent }
+  { path: 'editor', component: MainComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'prefix' },
 ];
 
 @NgModule({

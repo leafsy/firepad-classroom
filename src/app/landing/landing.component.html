@@ -30,12 +30,11 @@
 				</mat-option>
 			</mat-select>
 		</mat-form-field>
-		<a mat-raised-button
+		<button mat-raised-button
 			color="accent"
-			routerLink="/editor"
-			[queryParams]="{mode:mode}">
+			(click)="onCreateClick()">
 			Create
-		</a>
+		</button>
 	</mat-card-actions>
 </mat-card>
 
@@ -53,11 +52,10 @@
 				maxlength="20"
 				[(ngModel)]="key">
 		</mat-form-field>
-		<a mat-raised-button
+		<button mat-raised-button
 			color="accent"
-			routerLink="/editor"
-			[queryParams]="{key:key}">
+			(click)="onJoinClick()">
 			Join
-		</a>
+		</button>
 	</mat-card-actions>
 </mat-card>

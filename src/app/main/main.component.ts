@@ -2,9 +2,9 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AceEditorComponent } from 'ng2-ace-editor';
 import { UserPanelComponent } from '../user-panel/user-panel.component';
+import { FirebaseService } from '../../services/firebase.service';
 import { Mode } from '../models';
 import { allModes } from '../templates';
-import * as firebase from 'firebase';
 import * as Firepad from 'firepad';
 
 @Component({
@@ -35,60 +35,22 @@ export class MainComponent implements OnInit {
     scrollPastEnd: 0.5,
   };
 
-  ref : firebase.database.Reference;
-  userId : string = Math.floor(Math.random() * 9999999999).toString();
+  userId : string;
   ownerId : string = '';
   activeUser : string = '';
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-  ) { }
+    private service: FirebaseService,
+  ) {
+    this.userId = this.service.getUserId();
+  }
 
   ngOnInit() {
-    const presetMode = this.route.snapshot.queryParamMap.get('mode');
-    if (presetMode) {
-      this.selectedMode = presetMode;
-    }
-
-    const config = {
-      apiKey: "AIzaSyATUWj7WlsBhBIvr829TNawyCE0WOMHMEE",
-      authDomain: "firepad-classroom.firebaseapp.com",
-      databaseURL: "https://firepad-classroom.firebaseio.com",
-      projectId: "firepad-classroom",
-      storageBucket: "firepad-classroom.appspot.com",
-      messagingSenderId: "122988522958"
-    };
-
-    firebase.initializeApp(config);
-
-    // Get Firebase Database reference.
-    this.ref = firebase.database().ref();
-    let key = this.route.snapshot.queryParamMap.get('key');
-    if (key) {
-      this.ref = this.ref.child(key);
-      this.ref.child('owner').once('value', snapshot => {
-        this.ownerId = snapshot.val();
-      });
-      this.ref.child('mode').once('value', snapshot => {
-        this.selectedMode = snapshot.val();
-      });
-    } else {
-      this.ref = this.ref.push();
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: { key: this.ref.key },
-        queryParamsHandling: 'merge'
-      });
-      this.ownerId = this.userId;
-      this.ref. onDisconnect().remove();
-      this.ref.child('owner').set(this.userId);
-      this.ref.child('mode').set(this.selectedMode);
-    }
-
-    this.ref.child('activeUser').on('value', snapshot => {
-      this.activeUser = snapshot.val();
-    });
+    this.service.onceValue('owner', val => this.ownerId = val);
+    this.service.onceValue('mode', val => this.selectedMode = val);
+    this.service.onValue('activeUser', val => this.activeUser = val);
   }
 
   setSelectedMode(mode) {
@@ -107,7 +69,7 @@ export class MainComponent implements OnInit {
     const mode : Mode = this.modes.find(mode => {
       return mode.value === this.selectedMode;
     });
-    Firepad.fromACE(this.ref, this.aceEditor.getEditor(), {
+    Firepad.fromACE(this.service.getRef(), this.aceEditor.getEditor(), {
       userId: this.userId,
       defaultText: mode? mode.template : '',
     });
@@ -115,7 +77,7 @@ export class MainComponent implements OnInit {
 
   setActiveUser(id : string) {
     if (this.ownerId === this.userId) {
-      this.ref.child('activeUser').set(id === this.activeUser? '' : id);
+      this.service.setValue('activeUser', id === this.activeUser? '' : id);
     }
   }
 

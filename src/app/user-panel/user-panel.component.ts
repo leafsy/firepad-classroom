@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FirebaseService } from '../../services/firebase.service';
 import { uniqueNamesGenerator } from 'unique-names-generator';
 import { User } from '../models';
 
@@ -9,42 +10,43 @@ import { User } from '../models';
 })
 export class UserPanelComponent implements OnInit {
 
-  @Input() ref : any;
-  @Input() userId : string;
   @Input() ownerId : string;
   @Input() activeUser : string;
   @Output() activeUserChange = new EventEmitter();
 
+  userId : string;
   owner : User;
   users : User[];
 
   userName : string = uniqueNamesGenerator(' ', true);
   queryStr : string = '';
 
-  constructor() { }
+  constructor(private service: FirebaseService) {
+    this.userId = this.service.getUserId();
+  }
 
   ngOnInit() {
     this.nameChange();
-    this.ref.on('value', snapshot => {
+    this.service.onValue('users', users => {
       const newUsers : User[] = [];
-      snapshot.forEach(user => {
+      for (const id in users) {
         const newUser = {
-          id: user.key,
-          name: user.val().name,
-          color: user.val().color
+          id,
+          name: users[id].name,
+          color: users[id].color
         };
         if (newUser.id === this.ownerId) {
           this.owner = newUser;
         } else {
           newUsers.push(newUser);
         }
-      });
+      }
       this.users = newUsers;
     });
   }
 
   nameChange() {
-    const nameRef = this.ref.child(this.userId).child('name');
+    const nameRef = this.service.getRef().child(`users/${this.userId}/name`);
     nameRef.onDisconnect().remove();
     nameRef.set(this.userName);
   }
