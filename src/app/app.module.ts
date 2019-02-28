@@ -14,6 +14,7 @@ import { MainComponent } from './main/main.component';
 import { LandingComponent } from './landing/landing.component';
 import { KeyDialogComponent } from './key-dialog/key-dialog.component';
 import { ErrDialogComponent } from './err-dialog/err-dialog.component';
+import { TopNavbarComponent } from './top-navbar/top-navbar.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ErrDialogComponent } from './err-dialog/err-dialog.component';
     MainComponent,
     LandingComponent,
     KeyDialogComponent,
-    ErrDialogComponent
+    ErrDialogComponent,
+    TopNavbarComponent
   ],
   imports: [
     BrowserModule,

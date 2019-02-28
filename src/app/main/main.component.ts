@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { AceEditorComponent } from 'ng2-ace-editor';
@@ -12,8 +12,7 @@ import * as Firepad from 'firepad';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
-  styleUrls: ['./main.component.less'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./main.component.less']
 })
 export class MainComponent implements OnInit {
 
