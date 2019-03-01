@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-top-navbar',
@@ -7,6 +7,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class TopNavbarComponent implements OnInit {
 
+  @Input() drawerOpen : boolean;
   @Output() homeClick = new EventEmitter();
   @Output() linkClick = new EventEmitter();
   @Output() listClick = new EventEmitter();

@@ -35,6 +35,10 @@ export class FirebaseService {
     return this.ref;
   }
 
+  getRefKey() {
+    return this.ref? this.ref.key : '';
+  }
+
   getUserId() {
     return this.id;
   }
@@ -56,10 +60,9 @@ export class FirebaseService {
   }
 
   removeOnDisconnect(path? : string) {
-    if (path) {
-      this.ref && this.ref.child(path).onDisconnect().remove();
-    } else {
-      this.ref && this.ref.onDisconnect().remove();
+    if (this.ref) {
+      const ref = path? this.ref.child(path) : this.ref;
+      ref.onDisconnect().remove();
     }
   }
 

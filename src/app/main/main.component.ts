@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDrawer } from '@angular/material';
 import { AceEditorComponent } from 'ng2-ace-editor';
 import { KeyDialogComponent } from '../key-dialog/key-dialog.component';
 import { ErrDialogComponent } from '../err-dialog/err-dialog.component';
@@ -17,6 +17,7 @@ import * as Firepad from 'firepad';
 export class MainComponent implements OnInit {
 
   @ViewChild('AceEditor') aceEditor : AceEditorComponent;
+  @ViewChild('drawer') drawer : MatDrawer;
 
   modes : Mode[] = allModes;
 
@@ -54,6 +55,7 @@ export class MainComponent implements OnInit {
     this.service.onceValue('mode', val => this.selectedMode = val);
     this.service.onValue('activeUser', val => this.activeUser = val);
     this.aceEditor.getEditor().renderer.setScrollMargin(10, 10);
+    this.drawer.open();
   }
 
   ngAfterViewInit() {
@@ -73,7 +75,7 @@ export class MainComponent implements OnInit {
   openKeyDialog() {
     this.dialog.open(KeyDialogComponent, {
       width: '500px',
-      data: { key: this.service.getRef().key }
+      data: { key: this.service.getRefKey() }
     });
   }
 
