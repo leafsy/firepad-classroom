@@ -9,3 +9,5 @@ export interface User {
   name: string;
   color: string;
 }
+
+export enum UserType { Instructor, Student }

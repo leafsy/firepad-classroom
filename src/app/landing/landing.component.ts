@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { MatSnackBar, MatButtonToggleGroup } from '@angular/material';
 import { FirebaseService } from '../../services/firebase.service';
-import { Mode } from '../models';
+import { Mode, UserType } from '../models';
 import { allModes } from '../templates';
 
 @Component({
@@ -12,17 +12,27 @@ import { allModes } from '../templates';
 })
 export class LandingComponent implements OnInit {
 
+  @ViewChild('group') toggleGroup : MatButtonToggleGroup;
+
   modes : Mode[] = allModes;
   mode : string = 'python';
   key : string = '';
+  UserType = UserType;
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private service: FirebaseService,
     private snackBar: MatSnackBar,
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    const key = this.route.snapshot.queryParamMap.get('key');
+    if (key) {
+      this.key = key;
+      this.toggleGroup.value = UserType.Student;
+    }
+  }
 
   onCreateClick() {
     this.service.setRef();

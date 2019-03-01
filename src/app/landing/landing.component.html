@@ -5,16 +5,16 @@
 	<h2>Collaborative code editing with write-permission control</h2>
 	<p>- join as -</p>
 	<mat-button-toggle-group #group="matButtonToggleGroup">
-		<mat-button-toggle value="i">
+		<mat-button-toggle [value]="UserType.Instructor">
 			Instructor
 		</mat-button-toggle>
-		<mat-button-toggle value="s">
+		<mat-button-toggle [value]="UserType.Student">
 			Student
 		</mat-button-toggle>
 	</mat-button-toggle-group>
 </div>
 
-<mat-card *ngIf="group.value==='i'" class="mat-card-landing">
+<mat-card *ngIf="group.value===UserType.Instructor" class="mat-card-landing">
 	<mat-card-header>
 	<mat-card-title>
 		Create a new workspace using the following language
@@ -40,7 +40,7 @@
 	</mat-card-actions>
 </mat-card>
 
-<mat-card *ngIf="group.value==='s'" class="mat-card-landing">
+<mat-card *ngIf="group.value===UserType.Student" class="mat-card-landing">
 	<mat-card-header>
 	<mat-card-title>
 		Join an existing workspace by entering its key below
