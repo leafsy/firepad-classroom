@@ -27,7 +27,7 @@ export class UserPanelComponent implements OnInit {
 
   ngOnInit() {
     this.nameChange();
-    this.service.onValue('users', users => {
+    this.service.onValue('users', users => setTimeout(() => {
       const newUsers : User[] = [];
       for (const id in users) {
         const newUser = {
@@ -42,7 +42,7 @@ export class UserPanelComponent implements OnInit {
         }
       }
       this.users = newUsers;
-    });
+    }));
   }
 
   nameChange() {

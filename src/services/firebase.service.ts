@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 import { environment } from '../environments/environment';
 import * as firebase from 'firebase';
 
@@ -7,13 +8,21 @@ import * as firebase from 'firebase';
 })
 export class FirebaseService {
 
+  private id : string = Math.floor(Math.random()*9999999999).toString();
   private root : firebase.database.Reference;
   private ref : firebase.database.Reference;
-  private id : string = Math.floor(Math.random()*9999999999).toString();
+  private refRemoveSource = new Subject<any>();
+  refRemoved$ = this.refRemoveSource.asObservable();
 
   constructor() {
   	firebase.initializeApp(environment.firebase);
     this.root = firebase.database().ref();
+    this.root.on('child_removed', snapshot => {
+      if (this.ref && this.ref.key === snapshot.key) {
+        this.ref = null;
+        this.refRemoveSource.next();
+      }
+    });
   }
 
   findKey(key : string, success, failure) {
