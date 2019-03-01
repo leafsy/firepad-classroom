@@ -53,6 +53,7 @@ export class MainComponent implements OnInit {
     this.service.onceValue('owner', val => this.ownerId = val);
     this.service.onceValue('mode', val => this.selectedMode = val);
     this.service.onValue('activeUser', val => this.activeUser = val);
+    this.aceEditor.getEditor().renderer.setScrollMargin(10, 10);
   }
 
   ngAfterViewInit() {
