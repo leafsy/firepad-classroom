@@ -10,17 +10,21 @@ import { MatSnackBar } from '@angular/material';
 export class KeyDialogComponent {
 
   constructor(
-  	public dialogRef : MatDialogRef<KeyDialogComponent>,
-  	@Inject(MAT_DIALOG_DATA) public data : string,
+    public dialogRef : MatDialogRef<KeyDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data : any,
     private snackBar: MatSnackBar,
   ) {}
 
   onDismiss() {
-  	this.dialogRef.close();
+    this.dialogRef.close();
   }
 
   onCopy() {
     this.snackBar.open('copied link to clipboard', 'OK', { duration: 1500 });
+  }
+
+  getShareLink() {
+    return `${location.origin}/home?key=${this.data.key}`;
   }
 
 }

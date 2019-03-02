@@ -10,13 +10,13 @@ import { MatDialogRef } from '@angular/material';
 export class ErrDialogComponent {
 
   constructor(
-  	public dialogRef : MatDialogRef<ErrDialogComponent>,
-  	private router: Router,
+    public dialogRef : MatDialogRef<ErrDialogComponent>,
+    private router: Router,
   ) {}
 
   onExit() {
-  	this.dialogRef.close();
-  	this.router.navigate(['/home']);
+    this.dialogRef.close();
+    this.router.navigate(['/home']);
   }
 
 }

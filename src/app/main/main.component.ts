@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDrawer } from '@angular/material';
 import { AceEditorComponent } from 'ng2-ace-editor';
@@ -68,9 +68,15 @@ export class MainComponent implements OnInit {
         userId: this.userId,
         defaultText: mode? mode.template : '',
       });
+      setTimeout(() => this.isOwner() && this.openKeyDialog());
     } else {
       setTimeout(() => this.openErrDialog());
     }
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHander(event) {
+    return !this.isOwner(); // show prompt iff instructor
   }
 
   openKeyDialog() {
@@ -87,6 +93,12 @@ export class MainComponent implements OnInit {
     });
   }
 
+  navigateToHome() {
+    this.router.navigate(['/home'], {
+      queryParams: { key: this.service.getRefKey() }
+    });
+  }
+
   setSelectedMode(mode) {
     this.selectedMode = mode;
   }
@@ -99,8 +111,12 @@ export class MainComponent implements OnInit {
     this.options = { ...this.options, fontSize: size };
   }
 
+  isOwner() {
+    return this.ownerId && this.ownerId === this.userId;
+  }
+
   setActiveUser(id : string) {
-    if (this.ownerId === this.userId) {
+    if (this.isOwner()) {
       this.service.setValue('activeUser', id === this.activeUser? '' : id);
     }
   }
