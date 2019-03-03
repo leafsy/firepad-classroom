@@ -52,8 +52,8 @@ export class UserPanelComponent implements OnInit {
   }
 
   isMatch(name: string) {
-    const matchStr = name.substring(0, this.queryStr.length);
-    return this.queryStr.toLowerCase() === matchStr.toLowerCase();
+    return name && this.queryStr.toLowerCase() ===
+      name.substring(0, this.queryStr.length).toLowerCase();
   }
 
   userChange(user: User) {
