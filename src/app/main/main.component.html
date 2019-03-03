@@ -19,7 +19,7 @@
     <as-split class="split-container"
       direction="vertical"
       (dragEnd)="resizeEditors()">
-      <as-split-area size="100">
+      <as-split-area size="95">
         <ace-editor
           #mainEditor
           [mode]="selectedMode"
@@ -30,7 +30,7 @@
           class="ace-editor"
         ></ace-editor>
       </as-split-area>
-      <as-split-area size="0">
+      <as-split-area size="5">
         <ace-editor
           #noteEditor
           [mode]="selectedMode"

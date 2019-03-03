@@ -67,8 +67,9 @@ export class MainComponent implements OnInit {
       });
       Firepad.fromACE(this.service.getRef(), this.mainEditor.getEditor(), {
         userId: this.userId,
-        defaultText: mode? mode.template : '',
+        defaultText: mode? mode.contMain : '',
       });
+      this.noteEditor.getEditor().setValue(mode? mode.contNote : '', 1);
       setTimeout(() => this.isOwner() && this.openKeyDialog());
     } else {
       setTimeout(() => this.openErrDialog());

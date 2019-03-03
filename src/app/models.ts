@@ -1,7 +1,8 @@
 export interface Mode {
   name: string;
   value: string;
-  template: string;
+  contMain: string;
+  contNote: string;
 }
 
 export interface User {
