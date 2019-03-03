@@ -15,7 +15,6 @@ export class ErrDialogComponent {
   ) {}
 
   onExit() {
-    this.dialogRef.close();
     this.router.navigate(['/home']);
   }
 

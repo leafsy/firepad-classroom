@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MatDialog, MatDrawer } from '@angular/material';
+import { MatSnackBar, MatDialog, MatDrawer } from '@angular/material';
 import { AceEditorComponent } from 'ng2-ace-editor';
 import { KeyDialogComponent } from '../key-dialog/key-dialog.component';
 import { ErrDialogComponent } from '../err-dialog/err-dialog.component';
@@ -46,6 +46,7 @@ export class MainComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private service: FirebaseService,
+    private snackBar: MatSnackBar,
     private dialog: MatDialog,
   ) {
     this.userId = this.service.getUserId();
@@ -54,7 +55,14 @@ export class MainComponent implements OnInit {
   ngOnInit() {
     this.service.onceValue('owner', val => this.ownerId = val);
     this.service.onceValue('mode', val => this.selectedMode = val);
-    this.service.onValue('activeUser', val => this.activeUser = val);
+    this.service.onValue('activeUser', val => {
+      if (val === this.userId && !this.isActiveUser()) {
+        this.snackBar.open('You\'ve been given write permission', 'OK');
+      } else if (this.isActiveUser() && val !== this.userId) {
+        this.snackBar.open('You no longer have write permission', 'OK');
+      }
+      this.activeUser = val;
+    });
     this.service.refRemoved$.subscribe(() => this.openErrDialog());
     this.mainEditor.getEditor().renderer.setScrollMargin(10, 10);
     this.drawer.open();
@@ -74,6 +82,11 @@ export class MainComponent implements OnInit {
     } else {
       setTimeout(() => this.openErrDialog());
     }
+  }
+
+  ngOnDestroy() {
+    this.dialog.closeAll();
+    this.snackBar.dismiss();
   }
 
   @HostListener('window:beforeunload', ['$event'])
@@ -120,6 +133,10 @@ export class MainComponent implements OnInit {
 
   isOwner() {
     return this.ownerId && this.ownerId === this.userId;
+  }
+
+  isActiveUser() {
+    return this.activeUser && this.activeUser === this.userId;
   }
 
   setActiveUser(id : string) {

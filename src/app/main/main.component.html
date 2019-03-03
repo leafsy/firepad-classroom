@@ -25,7 +25,7 @@
           [mode]="selectedMode"
           [theme]="selectedTheme"
           [options]="options"
-          [readOnly]="!(ownerId===userId || activeUser===userId)"
+          [readOnly]="!(isOwner()||isActiveUser())"
           [autoUpdateContent]="true"
           class="ace-editor"
         ></ace-editor>
