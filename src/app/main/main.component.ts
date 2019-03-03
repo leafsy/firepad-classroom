@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {
+  Component, OnInit, AfterViewInit, OnDestroy, ViewChild, HostListener
+} from '@angular/core';
+import { Router } from '@angular/router';
 import { MatSnackBar, MatDialog, MatDrawer } from '@angular/material';
 import { AceEditorComponent } from 'ng2-ace-editor';
 import { KeyDialogComponent } from '../key-dialog/key-dialog.component';
@@ -14,23 +16,23 @@ import * as Firepad from 'firepad';
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.less']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  @ViewChild('mainEditor') mainEditor : AceEditorComponent;
-  @ViewChild('noteEditor') noteEditor : AceEditorComponent;
-  @ViewChild('drawer') drawer : MatDrawer;
+  @ViewChild('mainEditor') mainEditor: AceEditorComponent;
+  @ViewChild('noteEditor') noteEditor: AceEditorComponent;
+  @ViewChild('drawer') drawer: MatDrawer;
 
-  modes : Mode[] = allModes;
+  modes: Mode[] = allModes;
 
-  themes : any = {
+  themes: any = {
     light: ['chrome', 'eclipse', 'xcode'],
     dark: ['cobalt', 'monokai', 'terminal'],
   };
 
-  selectedMode : string = 'python';
-  selectedTheme : string = 'chrome';
+  selectedMode = 'python';
+  selectedTheme = 'chrome';
 
-  options : any = {
+  options: any = {
     fontSize: 15,
     tabSize: 2,
     useSoftTabs: true,
@@ -38,16 +40,15 @@ export class MainComponent implements OnInit {
     scrollPastEnd: 0.5,
   };
 
-  userId : string;
-  ownerId : string = '';
-  activeUser : string = '';
+  userId: string;
+  ownerId = '';
+  activeUser = '';
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private service: FirebaseService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
+    private router: Router,
   ) {
     this.userId = this.service.getUserId();
   }
@@ -70,14 +71,12 @@ export class MainComponent implements OnInit {
 
   ngAfterViewInit() {
     if (this.service.getRef()) {
-      const mode : Mode = this.modes.find(mode => {
-        return mode.value === this.selectedMode;
-      });
+      const mode: Mode = this.modes.find(m => m.value === this.selectedMode);
       Firepad.fromACE(this.service.getRef(), this.mainEditor.getEditor(), {
         userId: this.userId,
-        defaultText: mode? mode.contMain : '',
+        defaultText: mode ? mode.contMain : '',
       });
-      this.noteEditor.getEditor().setValue(mode? mode.contNote : '', 1);
+      this.noteEditor.getEditor().setValue(mode ? mode.contNote : '', 1);
       setTimeout(() => this.isOwner() && this.openKeyDialog());
     } else {
       setTimeout(() => this.openErrDialog());
@@ -123,11 +122,11 @@ export class MainComponent implements OnInit {
     this.selectedMode = mode;
   }
 
-  setSelectedTheme(theme : string) {
+  setSelectedTheme(theme: string) {
     this.selectedTheme = theme;
   }
 
-  setFontSize(size : number) {
+  setFontSize(size: number) {
     this.options = { ...this.options, fontSize: size };
   }
 
@@ -139,9 +138,9 @@ export class MainComponent implements OnInit {
     return this.activeUser && this.activeUser === this.userId;
   }
 
-  setActiveUser(id : string) {
+  setActiveUser(id: string) {
     if (this.isOwner()) {
-      this.service.setValue('activeUser', id === this.activeUser? '' : id);
+      this.service.setValue('activeUser', id === this.activeUser ? '' : id);
     }
   }
 

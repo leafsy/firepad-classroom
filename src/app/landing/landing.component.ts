@@ -12,11 +12,11 @@ import { allModes } from '../templates';
 })
 export class LandingComponent implements OnInit {
 
-  @ViewChild('group') toggleGroup : MatButtonToggleGroup;
+  @ViewChild('group') toggleGroup: MatButtonToggleGroup;
 
-  modes : Mode[] = allModes;
-  mode : string = 'python';
-  key : string = '';
+  modes: Mode[] = allModes;
+  mode = 'python';
+  key = '';
   UserType = UserType;
 
   constructor(

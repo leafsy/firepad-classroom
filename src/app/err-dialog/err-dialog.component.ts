@@ -10,7 +10,7 @@ import { MatDialogRef } from '@angular/material';
 export class ErrDialogComponent {
 
   constructor(
-    public dialogRef : MatDialogRef<ErrDialogComponent>,
+    public dialogRef: MatDialogRef<ErrDialogComponent>,
     private router: Router,
   ) {}
 

@@ -10,16 +10,16 @@ import { User } from '../models';
 })
 export class UserPanelComponent implements OnInit {
 
-  @Input() ownerId : string;
-  @Input() activeUser : string;
+  @Input() ownerId: string;
+  @Input() activeUser: string;
   @Output() activeUserChange = new EventEmitter();
 
-  userId : string;
-  owner : User;
-  users : User[];
+  userId: string;
+  owner: User;
+  users: User[];
 
-  userName : string = uniqueNamesGenerator(' ', true);
-  queryStr : string = '';
+  userName: string = uniqueNamesGenerator(' ', true);
+  queryStr = '';
 
   constructor(private service: FirebaseService) {
     this.userId = this.service.getUserId();
@@ -28,8 +28,9 @@ export class UserPanelComponent implements OnInit {
   ngOnInit() {
     this.nameChange();
     this.service.onValue('users', users => setTimeout(() => {
-      const newUsers : User[] = [];
-      for (const id in users) {
+      if (!users) { return; }
+      const newUsers: User[] = [];
+      for (const id of Object.keys(users)) {
         const newUser = {
           id,
           name: users[id].name,
@@ -50,12 +51,12 @@ export class UserPanelComponent implements OnInit {
     this.service.removeOnDisconnect(`users/${this.userId}/name`);
   }
 
-  isMatch(name : string) {
+  isMatch(name: string) {
     const matchStr = name.substring(0, this.queryStr.length);
     return this.queryStr.toLowerCase() === matchStr.toLowerCase();
   }
 
-  userChange(user : User) {
+  userChange(user: User) {
     this.activeUserChange.emit(user.id);
   }
 

@@ -8,19 +8,19 @@ import { Mode } from '../models';
 })
 export class EditorPrefComponent implements OnInit {
 
-  @Input() modes : Mode[];
-  @Input() selectedMode : string;
+  @Input() modes: Mode[];
+  @Input() selectedMode: string;
   @Output() selectedModeChange = new EventEmitter();
 
-  @Input() themes : any;
-  @Input() selectedTheme : string;
+  @Input() themes: any;
+  @Input() selectedTheme: string;
   @Output() selectedThemeChange = new EventEmitter();
 
-  @Input() fontSize : number;
+  @Input() fontSize: number;
   @Output() fontSizeChange = new EventEmitter();
-  
-  minFontSize : number = 10;
-  maxFontSize : number = 30;
+
+  minFontSize = 10;
+  maxFontSize = 30;
 
   constructor() { }
 

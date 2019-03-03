@@ -10,8 +10,8 @@ import { MatSnackBar } from '@angular/material';
 export class KeyDialogComponent {
 
   constructor(
-    public dialogRef : MatDialogRef<KeyDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data : any,
+    public dialogRef: MatDialogRef<KeyDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private snackBar: MatSnackBar,
   ) {}
 
