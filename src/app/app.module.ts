@@ -4,6 +4,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { AceEditorModule } from 'ng2-ace-editor';
 import { ClipboardModule } from 'ngx-clipboard';
+import { AngularSplitModule } from 'angular-split';
 import { AppRoutingModule } from '../modules/app-routing.module';
 import { MaterialModule } from '../modules/material.module';
 
@@ -33,6 +34,7 @@ import { TopNavbarComponent } from './top-navbar/top-navbar.component';
     FormsModule,
     AceEditorModule,
     ClipboardModule,
+    AngularSplitModule.forRoot(),
     AppRoutingModule,
     MaterialModule
   ],

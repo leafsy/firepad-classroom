@@ -16,15 +16,30 @@
   </mat-drawer>
 
   <mat-drawer-content>
-    <ace-editor
-      #AceEditor
-      [mode]="selectedMode"
-      [theme]="selectedTheme"
-      [options]="options"
-      [readOnly]="!(ownerId===userId || activeUser===userId)"
-      [autoUpdateContent]="true"
-      class="ace-editor"
-    ></ace-editor>
+    <as-split class="split-container"
+      direction="vertical"
+      (dragEnd)="resizeEditors()">
+      <as-split-area size="100">
+        <ace-editor
+          #mainEditor
+          [mode]="selectedMode"
+          [theme]="selectedTheme"
+          [options]="options"
+          [readOnly]="!(ownerId===userId || activeUser===userId)"
+          [autoUpdateContent]="true"
+          class="ace-editor"
+        ></ace-editor>
+      </as-split-area>
+      <as-split-area size="0">
+        <ace-editor
+          #noteEditor
+          [mode]="selectedMode"
+          [theme]="selectedTheme"
+          [options]="options"
+          class="ace-editor"
+        ></ace-editor>
+      </as-split-area>
+    </as-split>
     <app-editor-pref
       [modes]="modes"
       [selectedMode]="selectedMode"

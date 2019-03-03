@@ -16,7 +16,8 @@ import * as Firepad from 'firepad';
 })
 export class MainComponent implements OnInit {
 
-  @ViewChild('AceEditor') aceEditor : AceEditorComponent;
+  @ViewChild('mainEditor') mainEditor : AceEditorComponent;
+  @ViewChild('noteEditor') noteEditor : AceEditorComponent;
   @ViewChild('drawer') drawer : MatDrawer;
 
   modes : Mode[] = allModes;
@@ -55,7 +56,7 @@ export class MainComponent implements OnInit {
     this.service.onceValue('mode', val => this.selectedMode = val);
     this.service.onValue('activeUser', val => this.activeUser = val);
     this.service.refRemoved$.subscribe(() => this.openErrDialog());
-    this.aceEditor.getEditor().renderer.setScrollMargin(10, 10);
+    this.mainEditor.getEditor().renderer.setScrollMargin(10, 10);
     this.drawer.open();
   }
 
@@ -64,7 +65,7 @@ export class MainComponent implements OnInit {
       const mode : Mode = this.modes.find(mode => {
         return mode.value === this.selectedMode;
       });
-      Firepad.fromACE(this.service.getRef(), this.aceEditor.getEditor(), {
+      Firepad.fromACE(this.service.getRef(), this.mainEditor.getEditor(), {
         userId: this.userId,
         defaultText: mode? mode.template : '',
       });
@@ -77,6 +78,11 @@ export class MainComponent implements OnInit {
   @HostListener('window:beforeunload', ['$event'])
   beforeUnloadHander(event) {
     return !this.isOwner(); // show prompt iff instructor
+  }
+
+  resizeEditors() {
+    this.mainEditor.getEditor().resize();
+    this.noteEditor.getEditor().resize();
   }
 
   openKeyDialog() {
