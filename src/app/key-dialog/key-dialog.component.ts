@@ -21,6 +21,7 @@ export class KeyDialogComponent {
 
   onCopy() {
     this.snackBar.open('copied link to clipboard', 'OK', { duration: 1500 });
+    this.dialogRef.close();
   }
 
   getShareLink() {
