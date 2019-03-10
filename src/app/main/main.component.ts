@@ -74,6 +74,7 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
       const mode: Mode = this.modes.find(m => m.value === this.selectedMode);
       Firepad.fromACE(this.service.getRef(), this.mainEditor.getEditor(), {
         userId: this.userId,
+        userColor: this.isOwner() ? '#80FDFF88' : '#FFFFFF00',
         defaultText: mode ? mode.contMain : '',
       });
       this.noteEditor.getEditor().setValue(mode ? mode.contNote : '', 1);
@@ -140,6 +141,9 @@ export class MainComponent implements OnInit, AfterViewInit, OnDestroy {
 
   setActiveUser(id: string) {
     if (this.isOwner()) {
+      this.service.setValue(`users/${id}/color`, '#FF80CA88');
+      this.activeUser &&
+        this.service.setValue(`users/${this.activeUser}/color`, '#FFFFFF00');
       this.service.setValue('activeUser', id === this.activeUser ? '' : id);
     }
   }

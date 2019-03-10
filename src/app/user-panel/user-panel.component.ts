@@ -34,7 +34,8 @@ export class UserPanelComponent implements OnInit {
         const newUser = {
           id,
           name: users[id].name,
-          color: users[id].color
+          // strip opacity value from hex color
+          color: users[id].color && users[id].color.substring(0, 7)
         };
         if (newUser.id === this.ownerId) {
           this.owner = newUser;
